@@ -13,3 +13,4 @@ emotion_scaler.pkl
 emotion.csv
 emotions_features.csv
 inference_config.pkl
+static/audio/*
