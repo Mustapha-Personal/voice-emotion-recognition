@@ -1,0 +1,88 @@
+{% extends "base.html" %} {% block title %}VoiceInsight Pro{% endblock %} {%
+block content %}
+<!-- Landing Page -->
+<div class="relative overflow-hidden">
+  <!-- Hero Section -->
+  <div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">
+          Transform Customer Feedback into
+          <span class="text-yellow-300">Emotional Intelligence</span>
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 text-indigo-100">
+          Record, analyze, and understand your customers' emotions through
+          advanced voice analysis
+        </p>
+        <div class="space-x-4">
+          <a
+            href="/register"
+            class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300"
+          >
+            Start Free Trial
+          </a>
+          <a
+            href="#features"
+            class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-indigo-600 transition duration-300"
+          >
+            Learn More
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div id="features" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Powerful Features
+        </h2>
+        <p class="text-xl text-gray-600">
+          Everything you need to understand your customers better
+        </p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center p-8 bg-gray-50 rounded-xl">
+          <i class="fas fa-microphone text-4xl text-indigo-600 mb-4"></i>
+          <h3 class="text-xl font-semibold mb-4">Voice Recording</h3>
+          <p class="text-gray-600">
+            High-quality audio recording with real-time feedback capture
+          </p>
+        </div>
+        <div class="text-center p-8 bg-gray-50 rounded-xl">
+          <i class="fas fa-brain text-4xl text-purple-600 mb-4"></i>
+          <h3 class="text-xl font-semibold mb-4">Emotion Analysis</h3>
+          <p class="text-gray-600">
+            AI-powered emotion detection from voice patterns and tone
+          </p>
+        </div>
+        <div class="text-center p-8 bg-gray-50 rounded-xl">
+          <i class="fas fa-chart-line text-4xl text-green-600 mb-4"></i>
+          <h3 class="text-xl font-semibold mb-4">Analytics Dashboard</h3>
+          <p class="text-gray-600">
+            Comprehensive insights and trends from customer feedback
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Section -->
+  <div class="bg-indigo-600 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+      <p class="text-xl mb-8">
+        Join thousands of businesses already using VoiceInsight Pro
+      </p>
+      <a
+        href="/register"
+        class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300"
+      >
+        Create Your Account
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

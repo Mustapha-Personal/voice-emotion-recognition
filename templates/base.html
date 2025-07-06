@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}VoiceInsight Pro{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <style>
+      .recording-animation {
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+      .emotion-happy {
+        color: #10b981;
+      }
+      .emotion-sad {
+        color: #ef4444;
+      }
+      .emotion-neutral {
+        color: #6b7280;
+      }
+      .emotion-angry {
+        color: #dc2626;
+      }
+      .emotion-excited {
+        color: #f59e0b;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 min-h-screen">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg border-b border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <a href="/" class="flex items-center space-x-3">
+              <i class="fas fa-microphone-alt text-2xl text-indigo-600"></i>
+              <span class="text-xl font-bold text-gray-900"
+                >VoiceInsight Pro</span
+              >
+            </a>
+          </div>
+          <div class="flex items-center space-x-4">
+            {% if session.user_id %}
+            <a
+              href="/dashboard"
+              class="text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium"
+              >Dashboard</a
+            >
+            <a
+              href="/record"
+              class="text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium"
+              >Record</a
+            >
+            <a
+              href="/history"
+              class="text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium"
+              >History</a
+            >
+            <a
+              href="/logout"
+              class="bg-red-600 text-white px-4 py-2 rounded-md text-sm hover:bg-red-700"
+              >Logout</a
+            >
+            {% else %}
+            <a
+              href="/login"
+              class="text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium"
+              >Login</a
+            >
+            <a
+              href="/register"
+              class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm hover:bg-indigo-700"
+              >Get Started</a
+            >
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <div class="max-w-7xl mx-auto mt-4 px-4">
+      {% for category, message in messages %}
+      <div
+        class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative mb-4"
+      >
+        <span>{{ message }}</span>
+        <button
+          type="button"
+          class="absolute top-0 bottom-0 right-0 px-4 py-3"
+          onclick="this.parentElement.style.display='none'"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %} {% endwith %}
+
+    <!-- Main Content -->
+    <main>{% block content %}{% endblock %}</main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-0">
+      <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8 px-4">
+        <div>
+          <div class="flex items-center space-x-3 mb-4">
+            <i class="fas fa-microphone-alt text-2xl text-indigo-400"></i>
+            <span class="text-xl font-bold">VoiceInsight Pro</span>
+          </div>
+          <p class="text-gray-400">
+            Transform customer feedback into actionable insights
+          </p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Product</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-white">Features</a></li>
+            <li><a href="#" class="hover:text-white">Pricing</a></li>
+            <li><a href="#" class="hover:text-white">API</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Support</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-white">Help Center</a></li>
+            <li><a href="#" class="hover:text-white">Contact</a></li>
+            <li><a href="#" class="hover:text-white">Privacy</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Company</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-white">About</a></li>
+            <li><a href="#" class="hover:text-white">Blog</a></li>
+            <li><a href="#" class="hover:text-white">Careers</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="text-center text-gray-400 mt-8 border-t border-gray-700 pt-4">
+        &copy; 2025 VoiceInsight Pro. All rights reserved.
+      </div>
+    </footer>
+  </body>
+</html>

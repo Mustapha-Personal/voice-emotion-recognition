@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}
+Feedback History - VoiceInsight Pro
+{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">Feedback History</h1>
+    <p class="mt-2 text-gray-600">
+      View and analyze all customer feedback recordings
+    </p>
+  </div>
+
+  <!-- Filter Form -->
+  <form method="get" action="{{ url_for('history') }}" class="flex items-center gap-4 p-4 mb-3">
+    <div class="flex-1">
+      <input 
+        type="text" 
+        name="search" 
+        placeholder="Search by customer's name..." 
+        value="{{ search }}" 
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200"
+      />
+    </div>
+
+    <div class="min-w-0 flex-shrink-0">
+      <select 
+        name="emotion" 
+        class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white transition-all duration-200"
+      >
+        <option value="">All Emotions</option>
+        <option value="happy" {% if emotion_filter == 'happy' %}selected{% endif %}>Happy</option>
+        <option value="angry" {% if emotion_filter == 'angry' %}selected{% endif %}>Angry</option>
+        <option value="sad" {% if emotion_filter == 'sad' %}selected{% endif %}>Sad</option>
+        <option value="neutral" {% if emotion_filter == 'neutral' %}selected{% endif %}>Neutral</option>
+      </select>
+    </div>
+
+    <button 
+      type="submit" 
+      class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 flex items-center gap-2 whitespace-nowrap"
+    >
+      Apply
+    </button>
+  </form>
+
+  <!-- Stats Summary -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+    <div class="bg-white p-4 rounded-lg shadow-md text-center">
+      <div class="text-2xl font-bold text-gray-900">{{ total_recordings or 0 }}</div>
+      <div class="text-sm text-gray-600">Total Recordings</div>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow-md text-center">
+      <div class="text-2xl font-bold text-green-600">{{ happy_count or 0 }}</div>
+      <div class="text-sm text-gray-600">Happy</div>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow-md text-center">
+      <div class="text-2xl font-bold text-red-600">{{ angry_count or 0 }}</div>
+      <div class="text-sm text-gray-600">Angry</div>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow-md text-center">
+      <div class="text-2xl font-bold text-blue-600">{{ sad_count or 0 }}</div>
+      <div class="text-sm text-gray-600">Sad</div>
+    </div>
+  </div>
+
+  <!-- Recording List -->
+  <div class="bg-white rounded-lg shadow-md">
+    <div class="px-6 py-4 border-b border-gray-200">
+      <h2 class="text-lg font-semibold text-gray-900">Recording List</h2>
+    </div>
+
+    <div class="divide-y divide-gray-200">
+      {% if recordings %}
+        {% for recording in recordings %}
+        <div class="p-6 hover:bg-gray-50 transition duration-300">
+          <div class="flex items-center space-x-4">
+            <div class="flex-shrink-0">
+              <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center">
+                <i class="fas fa-user text-gray-600"></i>
+              </div>
+            </div>
+            <div class="flex-1">
+              <p class="text-lg font-medium text-gray-900">{{ recording.customer_name }}</p>
+              <p class="text-sm text-gray-600">{{ recording.date }}</p>
+              <audio controls class="mt-2 w-full">
+                <source src="{{ recording.audio_url }}" type="audio/wav" />
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="text-center py-12">
+          <div class="w-16 h-16 mx-auto mb-4 text-gray-300">
+            <i class="fas fa-microphone-slash text-6xl"></i>
+          </div>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">No recordings found</h3>
+          <p class="text-gray-600 mb-4">Start by recording your first customer feedback</p>
+          <a href="/record" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition duration-300">
+            <i class="fas fa-microphone mr-2"></i> Record Feedback
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  {% if pagination.pages > 1 %}
+  <div class="flex justify-center mt-8">
+    <nav class="inline-flex -space-x-px">
+      {% if pagination.has_prev %}
+      <a href="{{ url_for('history', page=pagination.prev_num, search=search, emotion=emotion_filter) }}" class="px-3 py-2 text-sm bg-white border border-gray-300 rounded-l-md">Previous</a>
+      {% else %}
+      <span class="px-3 py-2 text-sm bg-gray-100 border border-gray-300 rounded-l-md text-gray-400">Previous</span>
+      {% endif %}
+
+      {% for p in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+        {% if p %}
+          {% if p == pagination.page %}
+            <span class="px-3 py-2 text-sm bg-indigo-600 text-white">{{ p }}</span>
+          {% else %}
+            <a href="{{ url_for('history', page=p, search=search, emotion=emotion_filter) }}" class="px-3 py-2 text-sm bg-white border border-gray-300">{{ p }}</a>
+          {% endif %}
+        {% else %}
+          <span class="px-3 py-2 text-sm text-gray-400">…</span>
+        {% endif %}
+      {% endfor %}
+
+      {% if pagination.has_next %}
+      <a href="{{ url_for('history', page=pagination.next_num, search=search, emotion=emotion_filter) }}" class="px-3 py-2 text-sm bg-white border border-gray-300 rounded-r-md">Next</a>
+      {% else %}
+      <span class="px-3 py-2 text-sm bg-gray-100 border border-gray-300 rounded-r-md text-gray-400">Next</span>
+      {% endif %}
+    </nav>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+__pycache__
+All
+AudioWAV
+env
+instance
+ravdess
+toronto
+best_model.keras
+best_model1_weights.keras
+cnn_model_full.keras
+emotion_encoder.pkl
+emotion_scaler.pkl
+emotion.csv
+emotions_features.csv
+inference_config.pkl
