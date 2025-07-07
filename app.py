@@ -10,6 +10,8 @@ import base64
 import uuid
 from predict_emotion import predict_emotion
 
+os.environ["PATH"] += os.pathsep + "C:\\ffmpeg\\bin"
+
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///voiceinsight.db'
